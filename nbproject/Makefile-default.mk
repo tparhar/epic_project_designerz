@@ -51,17 +51,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=photo_code.c
+SOURCEFILES_QUOTED_IF_SPACED=new_photocode.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/photo_code.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/photo_code.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/new_photocode.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/new_photocode.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/photo_code.o
+OBJECTFILES=${OBJECTDIR}/new_photocode.o
 
 # Source Files
-SOURCEFILES=photo_code.c
+SOURCEFILES=new_photocode.c
 
 
 
@@ -88,18 +88,18 @@ MP_PROCESSOR_OPTION=AVR128DB28
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/photo_code.o: photo_code.c  .generated_files/flags/default/7755244a21612f16220c56fe3d0e11b06a8b68cb .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+${OBJECTDIR}/new_photocode.o: new_photocode.c  .generated_files/flags/default/f6c276c5e2a8d1c9a7a8ee79176cd5c03453f01c .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/photo_code.o.d 
-	@${RM} ${OBJECTDIR}/photo_code.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1 -g -DDEBUG  -gdwarf-2  -x c -D__$(MP_PROCESSOR_OPTION)__   -mdfp="${DFP_DIR}/xc8"  -Wl,--gc-sections -O1 -ffunction-sections -fdata-sections -fshort-enums -fno-common -funsigned-char -funsigned-bitfields -Wall -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -gdwarf-3 -mconst-data-in-progmem -mno-const-data-in-config-mapped-progmem     -MD -MP -MF "${OBJECTDIR}/photo_code.o.d" -MT "${OBJECTDIR}/photo_code.o.d" -MT ${OBJECTDIR}/photo_code.o -o ${OBJECTDIR}/photo_code.o photo_code.c 
+	@${RM} ${OBJECTDIR}/new_photocode.o.d 
+	@${RM} ${OBJECTDIR}/new_photocode.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1 -g -DDEBUG  -gdwarf-2  -x c -D__$(MP_PROCESSOR_OPTION)__   -mdfp="${DFP_DIR}/xc8"  -Wl,--gc-sections -O1 -ffunction-sections -fdata-sections -fshort-enums -fno-common -funsigned-char -funsigned-bitfields -Wall -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -gdwarf-3 -mconst-data-in-progmem -mno-const-data-in-config-mapped-progmem     -MD -MP -MF "${OBJECTDIR}/new_photocode.o.d" -MT "${OBJECTDIR}/new_photocode.o.d" -MT ${OBJECTDIR}/new_photocode.o -o ${OBJECTDIR}/new_photocode.o new_photocode.c 
 	
 else
-${OBJECTDIR}/photo_code.o: photo_code.c  .generated_files/flags/default/2838c3cffdf80ca1cfe45f06c4ff60bcfecaa940 .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
+${OBJECTDIR}/new_photocode.o: new_photocode.c  .generated_files/flags/default/e02ede7471324cd60c3ed6c583e457975c0b281b .generated_files/flags/default/da39a3ee5e6b4b0d3255bfef95601890afd80709
 	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/photo_code.o.d 
-	@${RM} ${OBJECTDIR}/photo_code.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -x c -D__$(MP_PROCESSOR_OPTION)__   -mdfp="${DFP_DIR}/xc8"  -Wl,--gc-sections -O1 -ffunction-sections -fdata-sections -fshort-enums -fno-common -funsigned-char -funsigned-bitfields -Wall -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -gdwarf-3 -mconst-data-in-progmem -mno-const-data-in-config-mapped-progmem     -MD -MP -MF "${OBJECTDIR}/photo_code.o.d" -MT "${OBJECTDIR}/photo_code.o.d" -MT ${OBJECTDIR}/photo_code.o -o ${OBJECTDIR}/photo_code.o photo_code.c 
+	@${RM} ${OBJECTDIR}/new_photocode.o.d 
+	@${RM} ${OBJECTDIR}/new_photocode.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -x c -D__$(MP_PROCESSOR_OPTION)__   -mdfp="${DFP_DIR}/xc8"  -Wl,--gc-sections -O1 -ffunction-sections -fdata-sections -fshort-enums -fno-common -funsigned-char -funsigned-bitfields -Wall -DXPRJ_default=$(CND_CONF)  $(COMPARISON_BUILD)  -gdwarf-3 -mconst-data-in-progmem -mno-const-data-in-config-mapped-progmem     -MD -MP -MF "${OBJECTDIR}/new_photocode.o.d" -MT "${OBJECTDIR}/new_photocode.o.d" -MT ${OBJECTDIR}/new_photocode.o -o ${OBJECTDIR}/new_photocode.o new_photocode.c 
 	
 endif
 

@@ -1,5 +1,5 @@
-build/default/debug/photo_code.o.d build/default/debug/photo_code.o: \
- photo_code.c \
+build/default/production/new_photocode.o.d \
+ build/default/production/new_photocode.o: new_photocode.c \
  c:\program\ files\microchip\xc8\v2.45\avr\avr\include\avr\io.h \
  c:\program\ files\microchip\xc8\v2.45\avr\avr\include\avr\sfr_defs.h \
  c:\program\ files\microchip\xc8\v2.45\avr\avr\include\inttypes.h \
