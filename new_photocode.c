@@ -10,8 +10,35 @@
 #define PERIOD 20000
 
 int main(void) {
+    
+    /*      PHOTORESISTOR SETUP CODE              */
+    
+    // Enable global interrupts.
+    SREG = 0b10000000;
+    
+    // Set the ADC reference level to VDD.
+    VREF.ADC0REF = 0b10000101;
+    
+    // Enable the ADC interrupt.
+    ADC0.INTCTRL = 0b00000001;
+    
+    // Select PD2 (AIN2) as the ADC input.
+    ADC0.MUXPOS = 0x02;
+
+    // Select minimum clock divide.
+    ADC0.CTRLC = 0x00;
+    
+    // Select single ended mode, 12 bit resolution and free-running modes.
+    ADC0.CTRLA = 0b00000011;
+    
+    // Start conversion.
+    ADC0.COMMAND = 0x01;
+    
+    float adc_out;
+    float voltage;
+    
   
-/*          SQUARE WAVE CODE                */
+/*          SQUARE WAVE SETUP CODE                */
     CCP = 0xd8;
 
     CLKCTRL.OSCHFCTRLA = 0b00010100;
@@ -25,25 +52,40 @@ int main(void) {
 
     TCA0.SINGLE.PER = 0xffff;
     
-    unsigned int timerThreshold = 15000;
+    unsigned int timerThreshold = 15000; // to change duty cycle
 
 
     PORTA.DIRSET = 0b10000000; // PA7 OUTPUT PIN
 
+    
+    
+    
+    
+    /*          LOOP CODE           */
     while (1) {
 
-        PORTA.OUT &= 0b01111111; // Square wave low
-
-        while( TCA0.SINGLE.CNT <= PERIOD - timerThreshold);
-
-        TCA0.SINGLE.CNT = 0;
-
-        PORTA.OUT |= 0b10000000; // Square wave high
+        /*      ADC LOOP CODE*/
+        adc_out = ADC0.RES;
+        voltage = adc_out * (5.0/4095.0); // 5V reference level
         
-        while( TCA0.SINGLE.CNT <= timerThreshold);
-        TCA0.SINGLE.CNT = 0; //
+        // if higher than 3V
+        if (voltage > 0.1){
         
-        
+            /*      SQUARE WAVE LOOP CODE*/
+            PORTA.OUT &= 0b01111111; // Square wave low
+
+            while( TCA0.SINGLE.CNT <= PERIOD - timerThreshold);
+
+            TCA0.SINGLE.CNT = 0;
+
+            PORTA.OUT |= 0b10000000; // Square wave high
+
+            while( TCA0.SINGLE.CNT <= timerThreshold);
+            TCA0.SINGLE.CNT = 0; //
+        }
+        else {
+            PORTA.OUT = 0b00000000; // Turn LED off
+        }
     }
     
 }
