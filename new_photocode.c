@@ -5,7 +5,8 @@
  * Created on March 28, 2024, 12:44 PM
  */
 
-
+// When using a 100 ohm resistor, max is 4.65V, lowest when light shined directly
+// on it is 3.67V ~1V range. When it gets darker, goes up to 4.9V. ~1.5V range.
 #include <avr/io.h>
 #define PERIOD 20000
 
@@ -69,7 +70,7 @@ int main(void) {
         voltage = adc_out * (5.0/4095.0); // 5V reference level
         
         // if higher than 3V
-        if (voltage > 0.1){
+        if (voltage > 4){
         
             /*      SQUARE WAVE LOOP CODE*/
             PORTA.OUT &= 0b01111111; // Square wave low
