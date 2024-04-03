@@ -13,7 +13,8 @@ build/default/debug/new_photocode.o.d build/default/debug/new_photocode.o: \
  c:\program\ files\microchip\xc8\v2.45\avr\avr\include\avr\common.h \
  c:\program\ files\microchip\xc8\v2.45\avr\avr\include\avr\xmega.h \
  c:\program\ files\microchip\xc8\v2.45\avr\avr\include\avr\fuse.h \
- c:\program\ files\microchip\xc8\v2.45\avr\avr\include\avr\lock.h
+ c:\program\ files\microchip\xc8\v2.45\avr\avr\include\avr\lock.h \
+ c:\program\ files\microchip\xc8\v2.45\avr\avr\include\math.h
 
 c:\program\ files\microchip\xc8\v2.45\avr\avr\include\avr\io.h:
 
@@ -42,3 +43,5 @@ c:\program\ files\microchip\xc8\v2.45\avr\avr\include\avr\xmega.h:
 c:\program\ files\microchip\xc8\v2.45\avr\avr\include\avr\fuse.h:
 
 c:\program\ files\microchip\xc8\v2.45\avr\avr\include\avr\lock.h:
+
+c:\program\ files\microchip\xc8\v2.45\avr\avr\include\math.h:

@@ -7,8 +7,20 @@
 
 // When using a 100 ohm resistor, max is 4.65V, lowest when light shined directly
 // on it is 3.67V ~1V range. When it gets darker, goes up to 4.9V. ~1.5V range.
+
+
 #include <avr/io.h>
+#include <math.h>
 #define PERIOD 20000
+
+/*          VOLTAGE TO DUTY CYCLE CODE*/
+double new_threshold(double voltage) {
+    
+    double duty_cycle = (voltage - 3.67)/(5 - 3.67);
+    return fabs(duty_cycle) * PERIOD;
+    
+}
+
 
 int main(void) {
     
@@ -35,8 +47,8 @@ int main(void) {
     // Start conversion.
     ADC0.COMMAND = 0x01;
     
-    float adc_out;
-    float voltage;
+    double adc_out;
+    double voltage;
     
   
 /*          SQUARE WAVE SETUP CODE                */
@@ -68,25 +80,20 @@ int main(void) {
         /*      ADC LOOP CODE*/
         adc_out = ADC0.RES;
         voltage = adc_out * (5.0/4095.0); // 5V reference level
+        timerThreshold = new_threshold(voltage); // DOING THE THRESHOLD CONVERSION
+  
         
-        // if higher than 3V
-        if (voltage > 4){
-        
-            /*      SQUARE WAVE LOOP CODE*/
-            PORTA.OUT &= 0b01111111; // Square wave low
+        /*      SQUARE WAVE LOOP CODE*/
+        PORTA.OUT &= 0b01111111; // Square wave low
 
-            while( TCA0.SINGLE.CNT <= PERIOD - timerThreshold);
+        while( TCA0.SINGLE.CNT <= PERIOD - timerThreshold);
 
-            TCA0.SINGLE.CNT = 0;
+        TCA0.SINGLE.CNT = 0;
 
-            PORTA.OUT |= 0b10000000; // Square wave high
+        PORTA.OUT |= 0b10000000; // Square wave high
 
-            while( TCA0.SINGLE.CNT <= timerThreshold);
-            TCA0.SINGLE.CNT = 0; //
-        }
-        else {
-            PORTA.OUT = 0b00000000; // Turn LED off
-        }
+        while( TCA0.SINGLE.CNT <= timerThreshold);
+        TCA0.SINGLE.CNT = 0; //
     }
     
 }
