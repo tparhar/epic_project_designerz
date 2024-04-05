@@ -11,19 +11,17 @@
 
 #include <avr/io.h>
 #include <math.h>
-#define PERIOD 20000
+#define PERIOD 10000
 
 /*          VOLTAGE TO DUTY CYCLE CODE*/
 double new_threshold(double voltage) {
     
-    double duty_cycle = (voltage - 3.67)/(5 - 3.67);
-    return fabs(duty_cycle) * PERIOD;
+    double duty_cycle = (voltage)/(5);
+    return duty_cycle * PERIOD;
     
 }
 
-
-int main(void) {
-    
+void ADC_init(void) {
     /*      PHOTORESISTOR SETUP CODE              */
     
     // Enable global interrupts.
@@ -46,11 +44,9 @@ int main(void) {
     
     // Start conversion.
     ADC0.COMMAND = 0x01;
-    
-    double adc_out;
-    double voltage;
-    
-  
+}
+
+void TIMER_init(void) {
 /*          SQUARE WAVE SETUP CODE                */
     CCP = 0xd8;
 
@@ -64,20 +60,25 @@ int main(void) {
     TCA0.SINGLE.CTRLA = 0b00000111;
 
     TCA0.SINGLE.PER = 0xffff;
-    
-    unsigned int timerThreshold = 15000; // to change duty cycle
+}
 
+
+int main(void) {
+    
+    ADC_init();
+    TIMER_init();
 
     PORTA.DIRSET = 0b10000000; // PA7 OUTPUT PIN
     PORTD.DIRCLR = 0b00111000; // PD3-5 MOTION DETECTOR INPUT
 
     
-    
-    
+    unsigned int timerThreshold; // CHANGE LED BRIGHTNESS
+    double adc_out; // READING FROM PHOTORESISTOR
+    double voltage; // SAME AS ABOVE BUT ACTUAL VOLTAGE
     
     /*          LOOP CODE           */
     while (1) {
-
+        
         /*      ADC LOOP CODE*/
         adc_out = ADC0.RES;
         voltage = adc_out * (5.0/4095.0); // 5V reference level
