@@ -70,7 +70,7 @@ void automatic(double adc_out, double voltage, double timerThreshold) {
 
 
     /*      MOTION DETECTION CODE*/
-    if (PORTD.IN & 0b00001000) { // IF MOTION DETECTED
+    if ((PORTD.IN & 0b00001000) || (PORTD.IN & 0b00010000) || (PORTD.IN & 0b00100000)) { // IF MOTION DETECTED
         /*      SQUARE WAVE LOOP CODE*/
         PORTA.OUT &= 0b01111111; // SET SQUARE WAVE LOW
 
