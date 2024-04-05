@@ -63,31 +63,34 @@ void TIMER_init(void) {
 }
 
 void automatic(double adc_out, double voltage, double timerThreshold) {
-        /*      ADC LOOP CODE*/
-        adc_out = ADC0.RES;
-        voltage = adc_out * (5.0/4095.0); // 5V reference level
-        timerThreshold = new_threshold(voltage); // DOING THE THRESHOLD CONVERSION
+    /*      ADC LOOP CODE*/
+    adc_out = ADC0.RES;
+    voltage = adc_out * (5.0/4095.0); // 5V reference level
+    timerThreshold = new_threshold(voltage); // DOING THE THRESHOLD CONVERSION
 
-        
-        /*      MOTION DETECTION CODE*/
-        if (PORTD.IN & 0b00001000) { // IF MOTION DETECTED
-            /*      SQUARE WAVE LOOP CODE*/
-            PORTA.OUT &= 0b01111111; // SET SQUARE WAVE LOW
 
-            while( TCA0.SINGLE.CNT <= PERIOD - timerThreshold); // THIS IS HOW LONG IT STAYS LOW
+    /*      MOTION DETECTION CODE*/
+    if (PORTD.IN & 0b00001000) { // IF MOTION DETECTED
+        /*      SQUARE WAVE LOOP CODE*/
+        PORTA.OUT &= 0b01111111; // SET SQUARE WAVE LOW
 
-            TCA0.SINGLE.CNT = 0;
+        while( TCA0.SINGLE.CNT <= PERIOD - timerThreshold); // THIS IS HOW LONG IT STAYS LOW
 
-            PORTA.OUT |= 0b10000000; // SET SQUARE WAVE HIGH
+        TCA0.SINGLE.CNT = 0;
 
-            while( TCA0.SINGLE.CNT <= timerThreshold); // THIS IS HOW LONG IT STAYS HIGH
-            TCA0.SINGLE.CNT = 0; //
-        }
-        else { // NO MOTION DETECTED
-            PORTA.OUT &= 0b01111111; // LED OFF
-        }
+        PORTA.OUT |= 0b10000000; // SET SQUARE WAVE HIGH
+
+        while( TCA0.SINGLE.CNT <= timerThreshold); // THIS IS HOW LONG IT STAYS HIGH
+        TCA0.SINGLE.CNT = 0; //
+    }
+    else { // NO MOTION DETECTED
+        PORTA.OUT &= 0b01111111; // LED OFF
+    }
 }
 
+void manual(void) {
+    PORTA.OUT |= 0b10000000;
+}
 
 int main(void) {
     
@@ -103,7 +106,8 @@ int main(void) {
     double voltage; // SAME AS ABOVE BUT ACTUAL VOLTAGE
     
     while (1) {
-        automatic(adc_out, voltage, timerThreshold);
+        if(PORTD.IN & 0b01000000) {manual();}
+        else {automatic(adc_out, voltage, timerThreshold);}
     }
     
 }
