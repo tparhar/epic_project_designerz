@@ -86,20 +86,20 @@ int main(void) {
 
         
         /*      MOTION DETECTION CODE*/
-        if (PORTD.IN & 0b00001000) {
+        if (PORTD.IN & 0b00001000) { // IF MOTION DETECTED
             /*      SQUARE WAVE LOOP CODE*/
-            PORTA.OUT &= 0b01111111; // Square wave low
+            PORTA.OUT &= 0b01111111; // SET SQUARE WAVE LOW
 
-            while( TCA0.SINGLE.CNT <= PERIOD - timerThreshold);
+            while( TCA0.SINGLE.CNT <= PERIOD - timerThreshold); // THIS IS HOW LONG IT STAYS LOW
 
             TCA0.SINGLE.CNT = 0;
 
-            PORTA.OUT |= 0b10000000; // Square wave high
+            PORTA.OUT |= 0b10000000; // SET SQUARE WAVE HIGH
 
-            while( TCA0.SINGLE.CNT <= timerThreshold);
+            while( TCA0.SINGLE.CNT <= timerThreshold); // THIS IS HOW LONG IT STAYS HIGH
             TCA0.SINGLE.CNT = 0; //
         }
-        else {
+        else { // NO MOTION DETECTED
             PORTA.OUT &= 0b01111111; // LED OFF
         }
     }
