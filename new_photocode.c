@@ -62,23 +62,7 @@ void TIMER_init(void) {
     TCA0.SINGLE.PER = 0xffff;
 }
 
-
-int main(void) {
-    
-    ADC_init();
-    TIMER_init();
-
-    PORTA.DIRSET = 0b10000000; // PA7 OUTPUT PIN
-    PORTD.DIRCLR = 0b00111000; // PD3-5 MOTION DETECTOR INPUT
-
-    
-    unsigned int timerThreshold; // CHANGE LED BRIGHTNESS
-    double adc_out; // READING FROM PHOTORESISTOR
-    double voltage; // SAME AS ABOVE BUT ACTUAL VOLTAGE
-    
-    /*          LOOP CODE           */
-    while (1) {
-        
+void automatic(double adc_out, double voltage, double timerThreshold) {
         /*      ADC LOOP CODE*/
         adc_out = ADC0.RES;
         voltage = adc_out * (5.0/4095.0); // 5V reference level
@@ -102,6 +86,24 @@ int main(void) {
         else { // NO MOTION DETECTED
             PORTA.OUT &= 0b01111111; // LED OFF
         }
+}
+
+
+int main(void) {
+    
+    ADC_init();
+    TIMER_init();
+
+    PORTA.DIRSET = 0b10000000; // PA7 OUTPUT PIN
+    PORTD.DIRCLR = 0b01111000; // PD3-5 MOTION DETECTOR INPUT
+
+    
+    double timerThreshold; // CHANGE LED BRIGHTNESS
+    double adc_out; // READING FROM PHOTORESISTOR
+    double voltage; // SAME AS ABOVE BUT ACTUAL VOLTAGE
+    
+    while (1) {
+        automatic(adc_out, voltage, timerThreshold);
     }
     
 }
