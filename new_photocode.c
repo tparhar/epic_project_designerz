@@ -69,9 +69,10 @@ int main(void) {
 
 
     PORTA.DIRSET = 0b10000000; // PA7 OUTPUT PIN
-    PORTD.DIRCLR = 0b00111000; // PD3-5 MOTION DETECTOR INPUT
+    PORTD.DIRCLR = 0b01111000; // PD3-5 MOTION DETECTOR INPUT
+                               // PD6 SWITCH INPUT
 
-    
+    int manual = 0;
     
     
     
@@ -82,25 +83,39 @@ int main(void) {
         adc_out = ADC0.RES;
         voltage = adc_out * (5.0/4095.0); // 5V reference level
         timerThreshold = new_threshold(voltage); // DOING THE THRESHOLD CONVERSION
-
         
-        /*      MOTION DETECTION CODE*/
-        if (PORTD.IN & 0b00001000) {
-            /*      SQUARE WAVE LOOP CODE*/
-            PORTA.OUT &= 0b01111111; // Square wave low
+        /*      MANUAL/AUTOMATIC CODE*/
+        if (PORTD.IN & 0b01000000) manual = 1;
+        else manual = 0;
+        
+        switch(manual) {
+            case 0:
+                /*      MOTION DETECTION CODE*/
+                if ((PORTD.IN & 0b00001000) || (PORTD.IN & 0b00010000) || (PORTD.IN & 0b00100000)) {
+                    /*      SQUARE WAVE LOOP CODE*/
+                    PORTA.OUT &= 0b01111111; // Square wave low
 
-            while( TCA0.SINGLE.CNT <= PERIOD - timerThreshold);
+                    while( TCA0.SINGLE.CNT <= PERIOD - timerThreshold);
 
-            TCA0.SINGLE.CNT = 0;
+                    TCA0.SINGLE.CNT = 0;
 
-            PORTA.OUT |= 0b10000000; // Square wave high
+                    PORTA.OUT |= 0b10000000; // Square wave high
 
-            while( TCA0.SINGLE.CNT <= timerThreshold);
-            TCA0.SINGLE.CNT = 0; //
+                    while( TCA0.SINGLE.CNT <= timerThreshold);
+                    TCA0.SINGLE.CNT = 0; //
+                }
+                else {
+                    PORTA.OUT &= 0b01111111; // LED OFF
+                }
+                break;
+            case 1:
+                PORTA.OUT |= 0b10000000; // LED ON
+                break;
+            default:
+                break;
         }
-        else {
-            PORTA.OUT &= 0b01111111; // LED OFF
-        }
+        
+
     }
     
 }
