@@ -7,7 +7,7 @@
 
 #include <avr/io.h>
 #include <math.h>
-#define PERIOD 10000
+#define PERIOD 5000
 
 /*          VOLTAGE TO DUTY CYCLE CODE*/
 double new_threshold(double voltage) {

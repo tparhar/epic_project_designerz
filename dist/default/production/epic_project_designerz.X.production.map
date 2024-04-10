@@ -533,10 +533,10 @@ END GROUP
  .debug_abbrev  0x0000000000000000     0x2518 C:/Program Files/Microchip/MPLABX/v6.15/packs/Microchip/AVR-Dx_DFP/2.3.272/xc8/avr/lib/avrxmega4/memx-const/crtavr128db28.o
  .debug_abbrev  0x0000000000002518      0x222 build/default/production/new_photocode.o
 
-.debug_line     0x0000000000000000      0x3e5
+.debug_line     0x0000000000000000      0x3e4
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x0000000000000000      0x196 C:/Program Files/Microchip/MPLABX/v6.15/packs/Microchip/AVR-Dx_DFP/2.3.272/xc8/avr/lib/avrxmega4/memx-const/crtavr128db28.o
- .debug_line    0x0000000000000196      0x24f build/default/production/new_photocode.o
+ .debug_line    0x0000000000000196      0x24e build/default/production/new_photocode.o
 
 .debug_frame    0x0000000000000000       0xa8
  *(.debug_frame)
