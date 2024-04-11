@@ -5,8 +5,7 @@
  * Created on March 28, 2024, 12:44 PM
  */
 
-#include <avr/io.h>
-#include <math.h>
+
 #include "lampfuncs.h"
 
 int main(void) {

@@ -17,7 +17,6 @@
 #define MOTION_PIN_1 0
 #define MOTION_PIN_2 1
 #define MOTION_PIN_3 2
-
 #define SWITCH_PIN 6
 
 /*          VOLTAGE TO DUTY CYCLE CODE*/
@@ -128,11 +127,12 @@ void automatic(double adc_out, double voltage, double timerThreshold) {
         TCA0.SINGLE.CNT = 0; //
     }
     else { // NO MOTION DETECTED
-        PORTA.OUT &= 0b01111111; // LED OFF
+        PORTA.OUTCLR = PIN7_bm; // LED OFF
     }
 }
 
 void manual(void) {
-    PORTA.OUT |= 0b10000000;
+    PORTA.OUTSET = PIN7_bm;
 }
 
+#endif // LAMP_FUNCS_H
